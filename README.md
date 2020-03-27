@@ -1,4 +1,4 @@
-# patientdataconsolidater
+# patientdatastandardizer
 Project developed during the #codevscovid19 hackathon in 2020
 
 ## Overview
