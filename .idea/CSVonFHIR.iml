@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.opencsv:opencsv:5.1" level="project" />
     <orderEntry type="library" name="ca.uhn.hapi.fhir:org.hl7.fhir.r4:4.2.0" level="project" />
+    <orderEntry type="library" name="ca.uhn.hapi.fhir:org.hl7.fhir.validation:4.2.0" level="project" />
   </component>
 </module>
