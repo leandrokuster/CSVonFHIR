@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/patientdatastandardizer.iml" filepath="$PROJECT_DIR$/.idea/patientdatastandardizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/CSVonFHIR.iml" filepath="$PROJECT_DIR$/.idea/CSVonFHIR.iml" />
     </modules>
   </component>
 </project>
