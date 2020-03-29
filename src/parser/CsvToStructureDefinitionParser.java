@@ -1,8 +1,9 @@
 package parser;
 
 import csvmodel.Table;
-import org.hl7.fhir.r4.model.*;
-import org.hl7.fhir.r5.validation.BaseValidator;
+import org.hl7.fhir.r4.model.ElementDefinition;
+import org.hl7.fhir.r4.model.Enumerations;
+import org.hl7.fhir.r4.model.StructureDefinition;
 
 public class CsvToStructureDefinitionParser {
 

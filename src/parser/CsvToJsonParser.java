@@ -2,10 +2,7 @@ package parser;
 
 import csvmodel.Row;
 import csvmodel.Table;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import javax.json.JsonObject;
 
 public class CsvToJsonParser {
 
