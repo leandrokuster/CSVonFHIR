@@ -1,14 +1,62 @@
 package parser;
 
 import csvmodel.Table;
+import org.hl7.fhir.r4.formats.IParser;
+import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.model.ElementDefinition;
 import org.hl7.fhir.r4.model.Enumerations;
 import org.hl7.fhir.r4.model.StructureDefinition;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class CsvToStructureDefinitionParser {
 
+    private static final String filePath = "./res/structuredefinition/";
+    private static final String fileName = "CovidDataFinalStructureDef.json";
+
+    /**
+     * Generates a FHIR StructureDefinition based on a parsed CSV file.
+     *
+     * @param table Table object which represents the parsed CSV
+     * @param type FHIR StructureDefinition type
+     * @return A StructureDefinitionObject for the parsed CSV file
+     */
     public static StructureDefinition generateStructureDefinitionFromCsv(Table table, String type) {
 
+        StructureDefinition structureDefinition = initializeStructureDefinition(type);
+
+        StructureDefinition.StructureDefinitionDifferentialComponent differentialComponent = new StructureDefinition.StructureDefinitionDifferentialComponent();
+        StructureDefinition.StructureDefinitionSnapshotComponent snapshotComponent = new StructureDefinition.StructureDefinitionSnapshotComponent();
+        ElementDefinition first = new ElementDefinition();
+        first.setId(type);
+        first.setPath(type);
+
+        differentialComponent.addElement(first);
+        snapshotComponent.addElement(first);
+
+        for (String header : table.getHeaders()) {
+            ElementDefinition elementDefinition = populateElementDefinition(header, type);
+            differentialComponent.addElement(elementDefinition);
+            snapshotComponent.addElement(elementDefinition);
+        }
+
+        structureDefinition.setDifferential(differentialComponent);
+        structureDefinition.setSnapshot(snapshotComponent);
+
+        generateStructureDefinitionJson(structureDefinition);
+
+        return structureDefinition;
+    }
+
+    /**
+     * Initialize the structure definition and populate it with required metadata
+     *
+     * @param type FHIR StructureDefinition type
+     * @return StructureDefinition populated with metadata
+     */
+    private static StructureDefinition initializeStructureDefinition(String type) {
         StructureDefinition structureDefinition = new StructureDefinition();
         structureDefinition.setUrl("http://www.csvonfhir.com/codevscovid19/StructureDefinition/" + type);
         structureDefinition.setName("Healthdata");
@@ -19,32 +67,33 @@ public class CsvToStructureDefinitionParser {
         structureDefinition.setBaseDefinition("http://hl7.org/fhir/StructureDefinition/Element");
         structureDefinition.setDerivation(StructureDefinition.TypeDerivationRule.SPECIALIZATION);
 
-
-
-        StructureDefinition.StructureDefinitionDifferentialComponent structureDefinitionDifferentialComponent = new StructureDefinition.StructureDefinitionDifferentialComponent();
-        ElementDefinition first = new ElementDefinition();
-        first.setId(type);
-        first.setPath(type);
-
-
-
-        structureDefinitionDifferentialComponent.addElement(first);
-
-        for(String header : table.getHeaders()) {
-            String elementID = type + "." + header;
-            ElementDefinition elementDefinition = new ElementDefinition();
-            elementDefinition.setId(elementID);
-            elementDefinition.setPath(elementID);
-            elementDefinition.setMin(0);
-            elementDefinition.setMax("1");
-            elementDefinition.addType().setCode("string");
-
-            structureDefinitionDifferentialComponent.addElement(elementDefinition);
-        }
-
-        structureDefinition.setDifferential(structureDefinitionDifferentialComponent);
         return structureDefinition;
     }
 
+    /**
+     * Create ElementDefinition and set the required values.
+     *
+     * @param header String element containing a CSV header value
+     * @param type FHIR StructureDefinition type
+     * @return ElementDefinition based on a CSV header value
+     */
+    private static ElementDefinition populateElementDefinition(String header, String type) {
+        String elementID = type + "." + header;
+        ElementDefinition elementDefinition = new ElementDefinition();
+        elementDefinition.setId(elementID);
+        elementDefinition.setPath(elementID);
+        elementDefinition.setMin(0);
+        elementDefinition.setMax("1");
+        elementDefinition.addType().setCode("string");
 
+        return elementDefinition;
+    }
+
+    private static void generateStructureDefinitionJson(StructureDefinition structureDefinition) {
+        try {
+            new JsonParser().setOutputStyle(IParser.OutputStyle.PRETTY).compose(new FileOutputStream(filePath + fileName), structureDefinition);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
