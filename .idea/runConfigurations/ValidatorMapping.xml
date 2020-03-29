@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ValidatorMapping" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="org.hl7.fhir.r5.validation.Validator" />
+    <module name="CSVonFHIR" />
+    <option name="PROGRAM_PARAMETERS" value="PatientData.json -transform http://hl7.org/fhir/StructureMap/CovidDataFinal -version 4.0.1 -ig ./res/structuredefinition/CovidDataFinalStructureDef.json -ig ./res/maps/ -log test.txt -output ./output.json" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
