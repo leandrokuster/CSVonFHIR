@@ -3,11 +3,14 @@ package view;
 import com.opencsv.exceptions.CsvValidationException;
 import csvmodel.CsvTable;
 import org.hl7.fhir.r4.model.StructureDefinition;
+import org.json.simple.JSONObject;
 import parser.CsvParser;
+import parser.CsvToJsonParser;
 import parser.CsvToStructureDefinitionParser;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class Main {
     private static final String INPUT_PATH_FLAG = "-i";
@@ -29,9 +32,12 @@ public class Main {
                 String structureDefinitionJson = CsvToStructureDefinitionParser.generateStructureDefinitionJson(structureDefinition);
                 writeToFile(structureDefinitionOutputPath, structureDefinitionJson);
             } catch (IOException e) {
-                System.out.println("Warning: Generation of structure definition JSON failed.");
+                System.out.println("Warning: Generation of structure definition JSON file failed.");
             }
         }
+
+        List<JSONObject> inputTableJson = CsvToJsonParser.generateJSONFromCSV(inputTable, type);
+        // TODO: Retrieve map in correct format, plug inputTableJSON and map into transformator/validator, save output.
     }
 
     private static String getCsvInputPath(String[] args) {
