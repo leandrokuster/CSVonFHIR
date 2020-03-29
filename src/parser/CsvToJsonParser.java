@@ -4,29 +4,26 @@ import csvmodel.Row;
 import csvmodel.Table;
 import org.json.simple.JSONObject;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class CsvToJsonParser {
-
-    // TODO REFACTOR
-    public static JSONObject generateJSONFromCSV(Table table, String type) {
-
-        /*
-        JSONArray object = new JSONArray();
-        for (Row row : table.getRows()) {
-            JSONObject rowObject = new JSONObject();
-            for (String key : table.getHeaders()) {
-                rowObject.put(key, row.getAttribute(key));
-            }
-            object.add(rowObject);
-        }
-        */
-        JSONObject object1 = new JSONObject();
-        Row firstRow = table.getRows().get(0);
-        object1.put("resourceType", type);
+    public static JSONObject generateJSONFromRow(Table table, String resourceType, int rowIndex) {
+        Row targetRow = table.getRows().get(rowIndex);
+        JSONObject rowObject = new JSONObject();
+        rowObject.put("resourceType", resourceType);
         for (String key : table.getHeaders()) {
-            object1.put(key, firstRow.getAttribute(key));
+            System.out.println(key);
+            rowObject.put(key, targetRow.getAttribute(key));
         }
+        return rowObject;
+    }
 
-
-        return object1;
+    public static List<JSONObject> generateJSONFromCSV(Table table, String resourceType) {
+        List<JSONObject> tableList = new LinkedList<>();
+        for (int i = 0; i < table.getRows().size(); i++) {
+            tableList.add(generateJSONFromRow(table, resourceType, i));
+        }
+        return tableList;
     }
 }

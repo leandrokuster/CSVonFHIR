@@ -27,7 +27,7 @@ public class CsvToJsonParserTest {
             e.printStackTrace();
         }
         Assert.assertTrue(table.getHeaders().size() > 0);
-        JSONObject jsonObject = CsvToJsonParser.generateJSONFromCSV(table, "CovidDataFinal");
+        JSONObject jsonObject = CsvToJsonParser.generateJSONFromRow(table, "CovidDataFinal", 0);
 
         System.out.println(jsonObject.toString());
 
