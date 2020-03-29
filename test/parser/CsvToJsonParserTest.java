@@ -1,15 +1,11 @@
 package parser;
 
 import com.opencsv.exceptions.CsvValidationException;
-import csvmodel.Table;
-import org.hl7.fhir.r4.formats.IParser;
-import org.hl7.fhir.r4.formats.JsonParser;
-import org.json.simple.JSONArray;
+import csvmodel.CsvTable;
 import org.json.simple.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -20,7 +16,7 @@ public class CsvToJsonParserTest {
     @Test
     // TODO refactor
     public void testThatCSVToJSONParserFunctions() {
-        Table table = new Table();
+        CsvTable table = new CsvTable();
         try {
             table = CsvParser.readCsvFromFile(TEST_CSV_PATH);
         } catch (IOException | CsvValidationException e) {

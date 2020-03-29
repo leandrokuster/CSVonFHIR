@@ -5,16 +5,16 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Table {
+public class CsvTable {
     private List<String> headers;
-    private List<Row> rows;
+    private List<CsvRow> rows;
 
-    public Table() {
+    public CsvTable() {
         this.headers = new ArrayList<>();
         this.rows = new LinkedList<>();
     }
 
-    public Table(List<String> headers) {
+    public CsvTable(List<String> headers) {
         this.headers = headers;
         this.rows = new LinkedList<>();
     }
@@ -25,7 +25,7 @@ public class Table {
             for (int i = 0; i < this.headers.size(); i++) {
                 rowTable.put(this.headers.get(i), rowValues.get(i));
             }
-            rows.add(new Row(this, rowTable));
+            rows.add(new CsvRow(this, rowTable));
         } else {
             throw new IllegalArgumentException("Illegal amount of parameters to insert.");
         }
@@ -35,7 +35,7 @@ public class Table {
         return this.headers;
     }
 
-    public List<Row> getRows() {
+    public List<CsvRow> getRows() {
         return this.rows;
     }
 }

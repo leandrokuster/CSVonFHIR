@@ -2,11 +2,11 @@ package csvmodel;
 
 import java.util.Hashtable;
 
-public class Row {
-    private Table table;
+public class CsvRow {
+    private CsvTable table;
     private Hashtable<String, String> rowMap;
 
-    public Row(Table table, Hashtable<String, String> rowMap) {
+    public CsvRow(CsvTable table, Hashtable<String, String> rowMap) {
         this.table = table;
         this.rowMap = rowMap;
     }

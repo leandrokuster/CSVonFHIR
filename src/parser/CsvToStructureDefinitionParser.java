@@ -1,13 +1,12 @@
 package parser;
 
-import csvmodel.Table;
+import csvmodel.CsvTable;
 import org.hl7.fhir.r4.formats.IParser;
 import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.model.ElementDefinition;
 import org.hl7.fhir.r4.model.Enumerations;
 import org.hl7.fhir.r4.model.StructureDefinition;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -23,7 +22,7 @@ public class CsvToStructureDefinitionParser {
      * @param type FHIR StructureDefinition type
      * @return A StructureDefinitionObject for the parsed CSV file
      */
-    public static StructureDefinition generateStructureDefinitionFromCsv(Table table, String type) {
+    public static StructureDefinition generateStructureDefinitionFromCsv(CsvTable table, String type) {
 
         StructureDefinition structureDefinition = initializeStructureDefinition(type);
 
