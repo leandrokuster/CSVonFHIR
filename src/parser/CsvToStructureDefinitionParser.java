@@ -28,12 +28,9 @@ public class CsvToStructureDefinitionParser {
 
         StructureDefinition.StructureDefinitionDifferentialComponent differentialComponent = new StructureDefinition.StructureDefinitionDifferentialComponent();
         StructureDefinition.StructureDefinitionSnapshotComponent snapshotComponent = new StructureDefinition.StructureDefinitionSnapshotComponent();
-        ElementDefinition first = new ElementDefinition();
-        first.setId(type);
-        first.setPath(type);
 
-        differentialComponent.addElement(first);
-        snapshotComponent.addElement(first);
+        differentialComponent.addElement(createAndPopulateFirstDifferentialElement(type));
+        snapshotComponent.addElement(createAndPopulateFirstSnapshotElement(type));
 
         for (String header : table.getHeaders()) {
             ElementDefinition elementDefinition = populateElementDefinition(header, type);
@@ -47,6 +44,29 @@ public class CsvToStructureDefinitionParser {
         generateStructureDefinitionJson(structureDefinition);
 
         return structureDefinition;
+    }
+
+    private static ElementDefinition createAndPopulateFirstDifferentialElement(String type) {
+        ElementDefinition first = new ElementDefinition();
+        first.setId(type);
+        first.setPath(type);
+        return first;
+    }
+
+    private static ElementDefinition createAndPopulateFirstSnapshotElement(String type) {
+        ElementDefinition first = new ElementDefinition();
+        first.setId(type);
+        first.setPath(type);
+        first.setDefinition("Base definition for all elements in a resource.");
+        first.setMin(0);
+        first.setMax("*");
+        ElementDefinition.ElementDefinitionBaseComponent baseComponent = new ElementDefinition.ElementDefinitionBaseComponent();
+        baseComponent.setMin(0);
+        baseComponent.setMax("*");
+        baseComponent.setPath("Element");
+        first.setBase(baseComponent);
+
+        return first;
     }
 
     /**

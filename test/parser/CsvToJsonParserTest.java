@@ -29,7 +29,7 @@ public class CsvToJsonParserTest {
         System.out.println(jsonObject.toString());
 
         try {
-            FileWriter fileWriter = new FileWriter("PatientData.json");
+            FileWriter fileWriter = new FileWriter("./res/parsedCSV/PatientData.json");
             fileWriter.write(jsonObject.toString());
             fileWriter.close();
         } catch (IOException e) {
