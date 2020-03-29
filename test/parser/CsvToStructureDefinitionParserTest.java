@@ -7,7 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 public class CsvToStructureDefinitionParserTest {
 
@@ -16,8 +17,8 @@ public class CsvToStructureDefinitionParserTest {
     private static final String type = "CovidDataFinal";
 
     @Before
-    public void createAndPopulateStructureDefinition() {
-        CsvTable table = new CsvTable();
+    public void createAndPopulateStructureDefinition() throws NullPointerException {
+        CsvTable table = null;
         try {
             table = CsvParser.readCsvFromFile(TEST_CSV_PATH);
         } catch (IOException | CsvValidationException e) {

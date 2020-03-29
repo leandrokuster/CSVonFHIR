@@ -15,13 +15,14 @@ public class CsvToJsonParserTest {
 
     @Test
     // TODO refactor
-    public void testThatCSVToJSONParserFunctions() {
-        CsvTable table = new CsvTable();
+    public void testThatCSVToJSONParserFunctions() throws NullPointerException {
+        CsvTable table = null;
         try {
             table = CsvParser.readCsvFromFile(TEST_CSV_PATH);
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
+
         Assert.assertTrue(table.getHeaders().size() > 0);
         JSONObject jsonObject = CsvToJsonParser.generateJSONFromRow(table, "CovidDataFinal", 0);
 
