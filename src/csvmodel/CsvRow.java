@@ -23,7 +23,7 @@ public class CsvRow {
      * @param header The column header for the attribute
      * @return The data in the given column
      */
-    public String getAttribute(String header) {
+    public String getColumnValue(String header) {
         if (table.getHeaders().contains(header)) {
             return rowMap.get(header);
         } else {
@@ -37,7 +37,7 @@ public class CsvRow {
      * @param header    The column header to store the data in
      * @param attribute The data to store in the given column
      */
-    public void putAttribute(String header, String attribute) {
+    public void putColumnValue(String header, String attribute) {
         if (table.getHeaders().contains(header)) {
             rowMap.put(header, attribute);
         } else {
