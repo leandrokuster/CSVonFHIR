@@ -6,6 +6,7 @@ import org.hl7.fhir.r4.model.StructureDefinition;
 import parser.CsvParser;
 import parser.CsvToStructureDefinitionParser;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
@@ -18,9 +19,19 @@ public class Main {
         String type = getType(args);
         String structureDefinitionOutputPath = getStructureDefinitionOutputPath(args);
 
-        System.out.println("Parsing CSV...");
+        System.out.println("Reading CSV...");
         CsvTable inputTable = parseCsvFromFile(csvInputPath);
+
+        System.out.println("Generating structure definition...");
         StructureDefinition structureDefinition = CsvToStructureDefinitionParser.generateStructureDefinitionFromCsv(inputTable, type);
+        if (structureDefinitionOutputPath != null) {
+            try {
+                String structureDefinitionJson = CsvToStructureDefinitionParser.generateStructureDefinitionJson(structureDefinition);
+                writeToFile(structureDefinitionOutputPath, structureDefinitionJson);
+            } catch (IOException e) {
+                System.out.println("Warning: Generation of structure definition JSON failed.");
+            }
+        }
     }
 
     private static String getCsvInputPath(String[] args) {
@@ -61,6 +72,16 @@ public class Main {
         throw new IllegalArgumentException("Given parameter was not found.");
     }
 
+    private static void writeToFile(String path, String input) {
+        try {
+            FileWriter fileWriter = new FileWriter(path);
+            fileWriter.write(input);
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("Warning: Write to " + path + "failed.");
+        }
+    }
+
     private static CsvTable parseCsvFromFile(String path) {
         try {
             return CsvParser.readCsvFromFile(path);
@@ -71,6 +92,7 @@ public class Main {
             System.err.println("Error: CSV invalid.");
             System.exit(-1);
         }
+        throw new IllegalStateException();
     }
 
 }

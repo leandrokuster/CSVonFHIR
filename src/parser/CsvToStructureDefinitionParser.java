@@ -11,15 +11,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CsvToStructureDefinitionParser {
-
-    private static final String filePath = "./res/structuredefinition/";
-    private static final String fileName = "CovidDataFinalStructureDef.json";
-
     /**
      * Generates a FHIR StructureDefinition based on a parsed CSV file.
      *
      * @param table Table object which represents the parsed CSV
-     * @param type FHIR StructureDefinition type
+     * @param type  FHIR StructureDefinition type
      * @return A StructureDefinitionObject for the parsed CSV file
      */
     public static StructureDefinition generateStructureDefinitionFromCsv(CsvTable table, String type) {
@@ -40,8 +36,6 @@ public class CsvToStructureDefinitionParser {
         structureDefinition.setDifferential(differentialComponent);
         structureDefinition.setSnapshot(snapshotComponent);
 
-        generateStructureDefinitionJson(structureDefinition);
-
         return structureDefinition;
     }
 
@@ -60,7 +54,7 @@ public class CsvToStructureDefinitionParser {
         first.setMin(0);
         first.setMax("*");
         // Fixed value for typ and path because first Element has static values by definition
-        first.setBase(generateBaseComponent("Element",""));
+        first.setBase(generateBaseComponent("Element", ""));
 
         return first;
     }
@@ -102,7 +96,7 @@ public class CsvToStructureDefinitionParser {
      * Create ElementDefinition and set the required values.
      *
      * @param header String element containing a CSV header value
-     * @param type FHIR StructureDefinition type
+     * @param type   FHIR StructureDefinition type
      * @return ElementDefinition based on a CSV header value
      */
     private static ElementDefinition populateDifferentialElementDefinition(String type, String header) {
@@ -121,7 +115,7 @@ public class CsvToStructureDefinitionParser {
      * Create ElementDefinition for SnapshotComponents and set the required values.
      *
      * @param header String element containing a CSV header value
-     * @param type FHIR StructureDefinition type
+     * @param type   FHIR StructureDefinition type
      * @return ElementDefinition based on a CSV header value
      */
     private static ElementDefinition populateSnapshotElementDefinition(String type, String header) {
@@ -137,11 +131,7 @@ public class CsvToStructureDefinitionParser {
         return elementDefinition;
     }
 
-    private static void generateStructureDefinitionJson(StructureDefinition structureDefinition) {
-        try {
-            new JsonParser().setOutputStyle(IParser.OutputStyle.PRETTY).compose(new FileOutputStream(filePath + fileName), structureDefinition);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static String generateStructureDefinitionJson(StructureDefinition structureDefinition) throws IOException {
+        return new JsonParser().setOutputStyle(IParser.OutputStyle.PRETTY).composeString(structureDefinition);
     }
 }
