@@ -33,9 +33,8 @@ public class CsvToStructureDefinitionParser {
         snapshotComponent.addElement(createAndPopulateFirstSnapshotElement(type));
 
         for (String header : table.getHeaders()) {
-            ElementDefinition elementDefinition = populateElementDefinition(header, type);
-            differentialComponent.addElement(elementDefinition);
-            snapshotComponent.addElement(elementDefinition);
+            differentialComponent.addElement(populateDifferentialElementDefinition(type, header));
+            snapshotComponent.addElement(populateSnapshotElementDefinition(type, header));
         }
 
         structureDefinition.setDifferential(differentialComponent);
@@ -60,13 +59,23 @@ public class CsvToStructureDefinitionParser {
         first.setDefinition("Base definition for all elements in a resource.");
         first.setMin(0);
         first.setMax("*");
+        // Fixed value for typ and path because first Element has static values by definition
+        first.setBase(generateBaseComponent("Element",""));
+
+        return first;
+    }
+
+    private static ElementDefinition.ElementDefinitionBaseComponent generateBaseComponent(String type, String subPath) {
+        String path = type;
+        if (subPath.length() > 0) {
+            path += "." + subPath;
+        }
         ElementDefinition.ElementDefinitionBaseComponent baseComponent = new ElementDefinition.ElementDefinitionBaseComponent();
         baseComponent.setMin(0);
         baseComponent.setMax("*");
-        baseComponent.setPath("Element");
-        first.setBase(baseComponent);
+        baseComponent.setPath(path);
 
-        return first;
+        return baseComponent;
     }
 
     /**
@@ -96,7 +105,7 @@ public class CsvToStructureDefinitionParser {
      * @param type FHIR StructureDefinition type
      * @return ElementDefinition based on a CSV header value
      */
-    private static ElementDefinition populateElementDefinition(String header, String type) {
+    private static ElementDefinition populateDifferentialElementDefinition(String type, String header) {
         String elementID = type + "." + header;
         ElementDefinition elementDefinition = new ElementDefinition();
         elementDefinition.setId(elementID);
@@ -104,6 +113,26 @@ public class CsvToStructureDefinitionParser {
         elementDefinition.setMin(0);
         elementDefinition.setMax("1");
         elementDefinition.addType().setCode("string");
+
+        return elementDefinition;
+    }
+
+    /**
+     * Create ElementDefinition for SnapshotComponents and set the required values.
+     *
+     * @param header String element containing a CSV header value
+     * @param type FHIR StructureDefinition type
+     * @return ElementDefinition based on a CSV header value
+     */
+    private static ElementDefinition populateSnapshotElementDefinition(String type, String header) {
+        String elementID = type + "." + header;
+        ElementDefinition elementDefinition = new ElementDefinition();
+        elementDefinition.setId(elementID);
+        elementDefinition.setPath(elementID);
+        elementDefinition.setMin(0);
+        elementDefinition.setMax("1");
+        elementDefinition.addType().setCode("string");
+        elementDefinition.setBase(generateBaseComponent(type, header));
 
         return elementDefinition;
     }
