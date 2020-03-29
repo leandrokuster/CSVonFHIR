@@ -1,6 +1,5 @@
 package csvmodel;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,11 +8,7 @@ public class CsvTable {
     private List<String> headers;
     private List<CsvRow> rows;
 
-    public CsvTable() {
-        this.headers = new ArrayList<>();
-        this.rows = new LinkedList<>();
-    }
-
+    
     public CsvTable(List<String> headers) {
         this.headers = headers;
         this.rows = new LinkedList<>();
