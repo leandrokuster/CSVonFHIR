@@ -5,9 +5,14 @@ import csvmodel.Table;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.json.JsonObject;
+
 public class CsvToJsonParser {
 
-    public static JSONArray generateJSONFromCSV(Table table) {
+    // TODO REFACTOR
+    public static JSONObject generateJSONFromCSV(Table table, String type) {
+
+        /*
         JSONArray object = new JSONArray();
         for (Row row : table.getRows()) {
             JSONObject rowObject = new JSONObject();
@@ -16,6 +21,15 @@ public class CsvToJsonParser {
             }
             object.add(rowObject);
         }
-        return object;
+        */
+        JSONObject object1 = new JSONObject();
+        Row firstRow = table.getRows().get(0);
+        object1.put("resourceType", type);
+        for (String key : table.getHeaders()) {
+            object1.put(key, firstRow.getAttribute(key));
+        }
+
+
+        return object1;
     }
 }
