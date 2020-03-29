@@ -1,7 +1,7 @@
 package parser;
 
 import com.opencsv.exceptions.CsvValidationException;
-import csvmodel.Table;
+import csvmodel.CsvTable;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +17,7 @@ public class CsvToStructureDefinitionParserTest {
 
     @Before
     public void createAndPopulateStructureDefinition() {
-        Table table = new Table();
+        CsvTable table = new CsvTable();
         try {
             table = CsvParser.readCsvFromFile(TEST_CSV_PATH);
         } catch (IOException | CsvValidationException e) {
