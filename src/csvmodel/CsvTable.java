@@ -8,12 +8,22 @@ public class CsvTable {
     private List<String> headers;
     private List<CsvRow> rows;
 
-    
+    /**
+     * Generates an empty CsvTable prepared with a header for each column and ready to accept rows.
+     *
+     * @param headers A list of headers which represent the column headers used in the table
+     */
     public CsvTable(List<String> headers) {
         this.headers = headers;
         this.rows = new LinkedList<>();
     }
 
+    /**
+     * Inserts a new row into the table.
+     * Values inserted must correspond to the column headers defined previously.
+     *
+     * @param rowValues The values to insert with the new row
+     */
     public void insertRow(List<String> rowValues) {
         if (rowValues.size() == this.headers.size()) {
             Hashtable<String, String> rowTable = new Hashtable<>();
@@ -26,10 +36,16 @@ public class CsvTable {
         }
     }
 
+    /**
+     * @return The header row of the table, one entry for each column
+     */
     public List<String> getHeaders() {
         return this.headers;
     }
 
+    /**
+     * @return All data rows currently contained in the table, without the header row
+     */
     public List<CsvRow> getRows() {
         return this.rows;
     }
