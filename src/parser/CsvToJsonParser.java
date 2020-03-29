@@ -1,21 +1,29 @@
 package parser;
 
-import csvmodel.Row;
-import csvmodel.Table;
-import org.json.simple.JSONArray;
+import csvmodel.CsvRow;
+import csvmodel.CsvTable;
 import org.json.simple.JSONObject;
 
-public class CsvToJsonParser {
+import java.util.LinkedList;
+import java.util.List;
 
-    public static JSONArray generateJSONFromCSV(Table table) {
-        JSONArray object = new JSONArray();
-        for (Row row : table.getRows()) {
-            JSONObject rowObject = new JSONObject();
-            for (String key : table.getHeaders()) {
-                rowObject.put(key, row.getAttribute(key));
-            }
-            object.add(rowObject);
+public class CsvToJsonParser {
+    public static JSONObject generateJSONFromRow(CsvTable table, String resourceType, int rowIndex) {
+        CsvRow targetRow = table.getRows().get(rowIndex);
+        JSONObject rowObject = new JSONObject();
+        rowObject.put("resourceType", resourceType);
+        for (String key : table.getHeaders()) {
+            System.out.println(key);
+            rowObject.put(key, targetRow.getColumnValue(key));
         }
-        return object;
+        return rowObject;
+    }
+
+    public static List<JSONObject> generateJSONFromCSV(CsvTable table, String resourceType) {
+        List<JSONObject> tableList = new LinkedList<>();
+        for (int i = 0; i < table.getRows().size(); i++) {
+            tableList.add(generateJSONFromRow(table, resourceType, i));
+        }
+        return tableList;
     }
 }
