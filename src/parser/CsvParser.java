@@ -38,7 +38,7 @@ public class CsvParser {
     public static CsvTable readCsv(Reader reader) throws IOException, CsvValidationException {
         CSVReader csvReader = new CSVReader(reader);
         String[] currentLine = csvReader.readNext();
-        removeIllegalCharactersFromHeaders(currentLine);
+        currentLine = removeIllegalCharactersFromHeaders(currentLine);
         CsvTable table = new CsvTable(Arrays.asList(currentLine));
         while ((currentLine = csvReader.readNext()) != null) {
             table.insertRow(Arrays.asList(currentLine));
@@ -52,11 +52,13 @@ public class CsvParser {
      *
      * @param headers The array of headers to remove illegal characters from
      */
-    private static void removeIllegalCharactersFromHeaders(String[] headers) {
-        for (String currentHeader : headers) {
-            for (int i = 0; i < ILLEGAL_CHARACTERS.length; i++) {
-                currentHeader.replace(ILLEGAL_CHARACTERS[i], REPLACEMENT_CHARACTERS[i]);
+    private static String[] removeIllegalCharactersFromHeaders(String[] headers) {
+        String[] legalHeaders = new String[headers.length];
+        for (int i = 0; i < headers.length; i++) {
+            for (int j = 0; j < ILLEGAL_CHARACTERS.length; j++) {
+                legalHeaders[i] = headers[i].replace(ILLEGAL_CHARACTERS[j], REPLACEMENT_CHARACTERS[j]);
             }
         }
+        return legalHeaders;
     }
 }
