@@ -47,7 +47,7 @@ public class Main {
         try {
             return getParameter(INPUT_PATH_FLAG, args);
         } catch (IllegalArgumentException e) {
-            System.err.println("Error: Input CSV argument (-i) not found, terminating.");
+            System.err.println("Error: Input CSV argument (" + INPUT_PATH_FLAG + ") not found, terminating.");
             System.exit(-1);
         }
         throw new IllegalStateException();
@@ -57,17 +57,17 @@ public class Main {
         try {
             return getParameter(TYPE_FLAG, args);
         } catch (IllegalArgumentException e) {
-            System.err.println("Error: Type argument (-t) not found, terminating.");
+            System.err.println("Error: Type argument (" + TYPE_FLAG + ") not found, terminating.");
             System.exit(-1);
         }
         throw new IllegalStateException();
     }
 
-    private static String getMapPath(String[] args){
+    private static String getMapPath(String[] args) {
         try {
             return getParameter(MAP_PATH_FLAG, args);
         } catch (IllegalArgumentException e) {
-            System.err.println("Error: Map argument (-m) not found, terminating.");
+            System.err.println("Error: Map argument (" + MAP_PATH_FLAG + ") not found, terminating.");
             System.exit(-1);
         }
         throw new IllegalStateException();
@@ -77,7 +77,7 @@ public class Main {
         try {
             return getParameter(STRUCTURE_DEFINITION_PATH_FLAG, args);
         } catch (IllegalArgumentException e) {
-            System.out.println("Warning: Structure definition output argument (-s) not found, using default path.");
+            System.out.println("Warning: Structure definition output argument (" + STRUCTURE_DEFINITION_PATH_FLAG + ") not found, using default path (" + DEFAULT_STRUCTURE_DEFINITION_PATH + ").");
             return DEFAULT_STRUCTURE_DEFINITION_PATH;
         }
     }
@@ -86,7 +86,7 @@ public class Main {
         try {
             return getParameter(DATA_PATH_FLAG, args);
         } catch (IllegalArgumentException e) {
-            System.out.println("Warning: Data output argument (-d) not found, using default path.");
+            System.out.println("Warning: Data output argument (" + DATA_PATH_FLAG + ") not found, using default path (" + DEFAULT_DATA_PATH + ").");
             return DEFAULT_DATA_PATH;
         }
     }
