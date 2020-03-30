@@ -26,6 +26,7 @@ public class Main {
         String csvInputPath = getCsvInputPath(args);
         String type = getType(args);
         String mapPath = getMapPath(args);
+        System.out.println(mapPath);
         String structureDefinitionOutputPath = getStructureDefinitionOutputPath(args);
         String dataJsonPath = getDataJsonPath(args);
 
@@ -65,7 +66,7 @@ public class Main {
 
     private static String getMapPath(String[] args){
         try {
-            return getParameter(TYPE_FLAG, args);
+            return getParameter(MAP_PATH_FLAG, args);
         } catch (IllegalArgumentException e) {
             System.err.println("Error: Map argument (-m) not found, terminating.");
             System.exit(-1);
