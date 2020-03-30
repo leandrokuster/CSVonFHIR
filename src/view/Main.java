@@ -1,6 +1,5 @@
 package view;
 
-import com.google.gson.JsonArray;
 import com.opencsv.exceptions.CsvValidationException;
 import csvmodel.CsvTable;
 import org.hl7.fhir.r4.model.StructureDefinition;
