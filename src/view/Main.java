@@ -144,7 +144,12 @@ public class Main {
 
     private static void printHelpMessage() {
         System.out.println("CSVonFHIR help:");
-        System.out.println("  Required arguments:\n    -i [path]: Path to input CSV file\n    -t [string]: Type string\n    -m [path]: Path to FHIR mapping file");
-        System.out.println("  Optional arguments:\n    -d [path]: Path to output data JSON file\n    -s [path]: Path to to output structure definition file");
+        System.out.println("  Required arguments:" +
+                "\n    " + INPUT_PATH_FLAG + " [path]: Path to input CSV file" +
+                "\n    " + TYPE_FLAG + " [string]: Type string" +
+                "\n    " + MAP_PATH_FLAG + " [path]: Path to FHIR mapping file");
+        System.out.println("  Optional arguments:" +
+                "\n    " + DATA_PATH_FLAG + " [path]: Path to output data JSON file" +
+                "\n    " + STRUCTURE_DEFINITION_PATH_FLAG + " [path]: Path to to output structure definition file");
     }
 }
