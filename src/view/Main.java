@@ -29,7 +29,6 @@ public class Main {
         String csvInputPath = getCsvInputPath(args);
         String type = getType(args);
         String mapPath = getMapPath(args);
-        System.out.println(mapPath);
         String structureDefinitionOutputPath = getStructureDefinitionOutputPath(args);
         String dataJsonPath = getDataJsonPath(args);
 
