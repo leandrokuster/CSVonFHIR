@@ -17,6 +17,7 @@ public class Main {
     private static final String TYPE_FLAG = "-t";
     private static final String STRUCTURE_DEFINITION_PATH_FLAG = "-s";
     private static final String DATA_PATH_FLAG = "-d";
+    private static final String MAP_PATH_FLAG = "-m";
 
     private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
     private static final String DEFAULT_DATA_PATH = "./data.json";
@@ -24,6 +25,7 @@ public class Main {
     public static void main(String[] args) {
         String csvInputPath = getCsvInputPath(args);
         String type = getType(args);
+        String mapPath = getMapPath(args);
         String structureDefinitionOutputPath = getStructureDefinitionOutputPath(args);
         String dataJsonPath = getDataJsonPath(args);
 
@@ -37,8 +39,8 @@ public class Main {
         System.out.println("Generating data file...");
         JSONArray inputTableJson = CsvToJsonParser.generateJSONFromCSV(inputTable, type);
         writeDataJson(dataJsonPath, inputTableJson);
-        
-        // TODO: Save everything to a file, then pass it as a map file path and a single JSON array to transformator
+
+        // TODO: Hook up to transformator/validator
     }
 
     private static String getCsvInputPath(String[] args) {
@@ -56,6 +58,16 @@ public class Main {
             return getParameter(TYPE_FLAG, args);
         } catch (IllegalArgumentException e) {
             System.err.println("Error: Type argument (-t) not found, terminating.");
+            System.exit(-1);
+        }
+        throw new IllegalStateException();
+    }
+
+    private static String getMapPath(String[] args){
+        try {
+            return getParameter(TYPE_FLAG, args);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: Map argument (-m) not found, terminating.");
             System.exit(-1);
         }
         throw new IllegalStateException();
