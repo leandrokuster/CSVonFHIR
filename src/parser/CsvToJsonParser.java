@@ -11,7 +11,6 @@ public class CsvToJsonParser {
         JSONObject rowObject = new JSONObject();
         rowObject.put("resourceType", resourceType);
         for (String key : table.getHeaders()) {
-            System.out.println(key);
             rowObject.put(key, targetRow.getColumnValue(key));
         }
         return rowObject;
