@@ -2,6 +2,7 @@ package view;
 
 import com.opencsv.exceptions.CsvValidationException;
 import csvmodel.CsvTable;
+import fhirgenerator.FHIRGenerator;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.json.simple.JSONArray;
 import parser.CsvParser;
@@ -22,6 +23,7 @@ public class Main {
     private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
     private static final String DEFAULT_DATA_PATH = "./data.json";
     private static final String DEFAULT_FHIR_PATH = "./fhir_output/";
+    
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -46,7 +48,12 @@ public class Main {
         JSONArray inputTableJson = CsvToJsonParser.generateJSONFromCSV(inputTable, type);
         writeDataJson(dataJsonPath, inputTableJson);
 
-
+        try {
+            FHIRGenerator.generateFhirFiles(mapPath,structureDefinitionOutputPath,dataJsonPath,fhirOutputPath);
+        } catch (Exception e) {
+            System.err.println("ERROR: Error occurred while generating FHIR files.");
+            e.printStackTrace();
+        }
 
         // TODO: Hook up to transformator/validator
     }
@@ -55,7 +62,7 @@ public class Main {
         try {
             return getParameter(INPUT_PATH_FLAG, args);
         } catch (IllegalArgumentException e) {
-            System.err.println("Error: Input CSV argument (" + INPUT_PATH_FLAG + ") not found, terminating.");
+            System.err.println("ERROR: Input CSV argument (" + INPUT_PATH_FLAG + ") not found, terminating.");
             System.exit(-1);
         }
         throw new IllegalStateException();
@@ -65,7 +72,7 @@ public class Main {
         try {
             return getParameter(TYPE_FLAG, args);
         } catch (IllegalArgumentException e) {
-            System.err.println("Error: Type argument (" + TYPE_FLAG + ") not found, terminating.");
+            System.err.println("ERROR: Type argument (" + TYPE_FLAG + ") not found, terminating.");
             System.exit(-1);
         }
         throw new IllegalStateException();
@@ -75,7 +82,7 @@ public class Main {
         try {
             return getParameter(MAP_PATH_FLAG, args);
         } catch (IllegalArgumentException e) {
-            System.err.println("Error: Map argument (" + MAP_PATH_FLAG + ") not found, terminating.");
+            System.err.println("ERROR: Map argument (" + MAP_PATH_FLAG + ") not found, terminating.");
             System.exit(-1);
         }
         throw new IllegalStateException();
@@ -123,7 +130,7 @@ public class Main {
             String structureDefinitionJson = CsvToStructureDefinitionParser.generateStructureDefinitionJson(definition);
             writeToFile(path, structureDefinitionJson);
         } catch (IOException e) {
-            System.err.println("Error: Generation of structure definition JSON file failed.");
+            System.err.println("ERROR: Generation of structure definition JSON file failed.");
             System.exit(-1);
         }
     }
@@ -132,7 +139,7 @@ public class Main {
         try {
             writeToFile(path, data.toJSONString());
         } catch (IOException e) {
-            System.err.println("Error: Generation of data JSON file failed.");
+            System.err.println("ERROR: Generation of data JSON file failed.");
             System.exit(-1);
         }
     }
@@ -147,10 +154,10 @@ public class Main {
         try {
             return CsvParser.readCsvFromFile(path);
         } catch (IOException e) {
-            System.err.println("Error: Input file could not be read.");
+            System.err.println("ERROR: Input file could not be read.");
             System.exit(-1);
         } catch (CsvValidationException e) {
-            System.err.println("Error: CSV invalid.");
+            System.err.println("ERROR: CSV invalid.");
             System.exit(-1);
         }
         throw new IllegalStateException();
