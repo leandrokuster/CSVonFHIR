@@ -26,5 +26,6 @@ The application uses command line parameters to accept input:
   - Optional arguments:
     - `-d [path]`: The path where the output data JSON (the converted input CSV) is saved. The default value is `./data.json`.
     - `-s [path]`: The path where the FHIR structure definition file is saved. The default value is `./structure-definition.json`.
+    - `-o [path]`: The path where the generated FHIR files are saved to. The default value is `./fhir_output/`.
 
 

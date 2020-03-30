@@ -17,9 +17,11 @@ public class Main {
     private static final String STRUCTURE_DEFINITION_PATH_FLAG = "-s";
     private static final String DATA_PATH_FLAG = "-d";
     private static final String MAP_PATH_FLAG = "-m";
+    private static final String FHIR_PATH_FLAG = "-o";
 
     private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
     private static final String DEFAULT_DATA_PATH = "./data.json";
+    private static final String DEFAULT_FHIR_PATH = "./fhir_output/";
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -31,6 +33,7 @@ public class Main {
         String mapPath = getMapPath(args);
         String structureDefinitionOutputPath = getStructureDefinitionOutputPath(args);
         String dataJsonPath = getDataJsonPath(args);
+        String fhirOutputPath = getFhirOutputPath(args);
 
         System.out.println("Reading CSV...");
         CsvTable inputTable = parseCsvFromFile(csvInputPath);
@@ -42,6 +45,8 @@ public class Main {
         System.out.println("Generating data file...");
         JSONArray inputTableJson = CsvToJsonParser.generateJSONFromCSV(inputTable, type);
         writeDataJson(dataJsonPath, inputTableJson);
+
+
 
         // TODO: Hook up to transformator/validator
     }
@@ -93,6 +98,16 @@ public class Main {
             return DEFAULT_DATA_PATH;
         }
     }
+
+    private static String getFhirOutputPath(String[] args) {
+        try {
+            return getParameter(FHIR_PATH_FLAG, args);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Warning: Data output argument (" + FHIR_PATH_FLAG + ") not found, using default path (" + DEFAULT_FHIR_PATH + ").");
+            return DEFAULT_FHIR_PATH;
+        }
+    }
+
 
     private static String getParameter(String parameterFlag, String[] args) {
         for (int i = 0; i < args.length; i++) {
@@ -148,7 +163,8 @@ public class Main {
                 "\n    " + TYPE_FLAG + " [string]: Type string" +
                 "\n    " + MAP_PATH_FLAG + " [path]: Path to FHIR mapping file");
         System.out.println("  Optional arguments:" +
-                "\n    " + DATA_PATH_FLAG + " [path]: Path to output data JSON file" +
-                "\n    " + STRUCTURE_DEFINITION_PATH_FLAG + " [path]: Path to to output structure definition file");
+                "\n    " + DATA_PATH_FLAG + " [path]: Output file path for the parsed data JSON file" +
+                "\n    " + STRUCTURE_DEFINITION_PATH_FLAG + " [path]: Output file path for the generated structure definition" +
+                "\n    " + FHIR_PATH_FLAG + " [path]: Output directory to save the generated FHIR files");
     }
 }

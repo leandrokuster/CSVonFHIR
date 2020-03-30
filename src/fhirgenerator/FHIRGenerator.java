@@ -1,21 +1,13 @@
 package fhirgenerator;
 
-import org.hl7.fhir.r4.model.StructureDefinition;
-import org.json.simple.JSONObject;
-
 import java.io.IOException;
 
 public class FHIRGenerator {
 
     private static org.hl7.fhir.validation.ValidationEngine validator;
 
-    public void FHIRGenerator() {
-        try {
-            validator = initializeValidationEngine();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void generateFhirFiles(String mapPath, String structureDefinitionOutputPath, String dataJsonPath, String fhirOutputPath) throws Exception {
+        initializeValidationEngine(dataJsonPath, structureDefinitionOutputPath, mapPath);
     }
 
     /**
@@ -32,23 +24,12 @@ public class FHIRGenerator {
      * test.txt
      * -output
      * ./output.json
-     * @return
-     * @throws IOException
+     *
+     * @throws IOException when loading an ig into the validator failed
      */
-    private static org.hl7.fhir.validation.ValidationEngine initializeValidationEngine() throws IOException {
-        org.hl7.fhir.validation.ValidationEngine validator = null;
-        try {
-            validator = new org.hl7.fhir.validation.ValidationEngine("./res/parsedCSV/PatientData.json");
-            validator.loadIg("./res/structuredefinition/CovidDataFinalStructureDef.json", false);
-            validator.loadIg("./res/maps/CovidDataFinalMap.map", false);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return validator;
-    }
-
-    public void generateFHIRFileFromCSV(StructureDefinition structureDefinition, JSONObject inputFile, ) {
-
+    private static void initializeValidationEngine(String dataJsonPath, String structureDefinitionOutputPath, String mapPath) throws Exception {
+        validator = new org.hl7.fhir.validation.ValidationEngine(dataJsonPath);
+        validator.loadIg(structureDefinitionOutputPath, false);
+        validator.loadIg(mapPath, false);
     }
 }
