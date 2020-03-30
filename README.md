@@ -17,5 +17,14 @@ into the FHIR format.
 This will offer an easy way to make data accessible and sharable between various groups without much effort. 
 
 ## Setup & User Manual
+CSVonFHIR is executed over the command line like a standard Java application via the command `java -jar CSVonFHIR.jar`.
+The application uses command line parameters to accept input:
+  - Required arguments:
+    - `-i [path]`: The path to the input CSV file. This file is then parsed into JSON and fed through the FHIR transformator.
+    - `-t [string]`: The string to use in the FHIR format as the type of the data.
+    - `-m [path]`: The path to the mapping file (in FHIR mapping language) that serves to translate the output to FHIR.
+  - Optional arguments:
+    - `-d [path]`: The path where the output data JSON (the converted input CSV) is saved. The default value is `./data.json`.
+    - `-s [path]`: The path where the FHIR structure definition file is saved. The default value is `./structure-definition.json`.
 
 
