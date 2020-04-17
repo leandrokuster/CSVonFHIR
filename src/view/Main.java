@@ -23,7 +23,7 @@ public class Main {
     private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
     private static final String DEFAULT_DATA_PATH = "./data.json";
     private static final String DEFAULT_FHIR_PATH = "./fhir_output/";
-    
+
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -49,7 +49,9 @@ public class Main {
         writeDataJson(dataJsonPath, inputTableJson);
 
         try {
-            FHIRGenerator.generateFhirFiles(mapPath,structureDefinitionOutputPath,dataJsonPath,fhirOutputPath);
+            System.out.println("Generating FHIR files...");
+            FHIRGenerator.generateFhirFiles(mapPath, structureDefinitionOutputPath, dataJsonPath, fhirOutputPath);
+            System.out.println("Operation terminated successfully. FHIR files generated at " + fhirOutputPath + "*.");
         } catch (Exception e) {
             System.err.println("ERROR: Error occurred while generating FHIR files.");
             e.printStackTrace();
