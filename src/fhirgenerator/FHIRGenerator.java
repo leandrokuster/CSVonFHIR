@@ -1,5 +1,6 @@
 package fhirgenerator;
 
+import org.hl7.fhir.r5.validation.ValidationEngine;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -31,7 +32,7 @@ public class FHIRGenerator {
 
     private static void generateSingleFhirFile(JSONObject jsonObject, String structureDefinitionPath, String mapPath, String outputFilePath) throws Exception {
         writeToFile(TEMP_FILE_PATH, jsonObject);
-        org.hl7.fhir.validation.ValidationEngine validator = initializeValidationEngine(TEMP_FILE_PATH, structureDefinitionPath, mapPath);
+        ValidationEngine validator = initializeValidationEngine(TEMP_FILE_PATH, structureDefinitionPath, mapPath);
         validator.convert(TEMP_FILE_PATH, outputFilePath);
         deleteFile(TEMP_FILE_PATH);
     }
@@ -64,9 +65,9 @@ public class FHIRGenerator {
      *
      * @throws IOException when loading an ig into the validator failed
      */
-    private static org.hl7.fhir.validation.ValidationEngine initializeValidationEngine(String dataJsonPath, String structureDefinitionOutputPath, String mapPath) throws Exception {
-        org.hl7.fhir.validation.ValidationEngine validator;
-        validator = new org.hl7.fhir.validation.ValidationEngine(dataJsonPath);
+    private static ValidationEngine initializeValidationEngine(String dataJsonPath, String structureDefinitionOutputPath, String mapPath) throws Exception {
+        ValidationEngine validator;
+        validator = new ValidationEngine(dataJsonPath);
         validator.loadIg(structureDefinitionOutputPath, false);
         validator.loadIg(mapPath, false);
         return validator;
