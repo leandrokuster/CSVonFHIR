@@ -18,7 +18,7 @@ public class FHIRGenerator {
         FileReader fileReader = new FileReader(dataJsonPath);
         JSONParser jsonParser = new JSONParser();
         JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
-        String mapUrl = getMapUrl(null); // TODO: Implement dynamic reading of map name.
+        String mapUrl = MapUtils.getMapUrl(mapPath);
         ValidationEngine validator = initializeValidationEngine(structureDefinitionPath, mapPath);
 
         jsonArray.forEach(obj -> {
@@ -37,10 +37,6 @@ public class FHIRGenerator {
         Element transformedElement = validator.transform(TEMP_FILE_PATH, mapUrl);
         FileUtils.deleteFile(TEMP_FILE_PATH);
         FileUtils.writeElementToFile(outputFilePath, transformedElement, validator);
-    }
-
-    private static String getMapUrl(String mapFilePath) {
-        return "http://hl7.org/fhir/StructureMap/CovidDataFinalMap";
     }
 
     /**
