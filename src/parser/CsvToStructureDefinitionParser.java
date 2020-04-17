@@ -7,7 +7,6 @@ import org.hl7.fhir.r4.model.ElementDefinition;
 import org.hl7.fhir.r4.model.Enumerations;
 import org.hl7.fhir.r4.model.StructureDefinition;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CsvToStructureDefinitionParser {
