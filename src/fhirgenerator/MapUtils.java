@@ -7,6 +7,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MapUtils {
+    /**
+     * Scans a map file at a given path for the contained URL which designates the map and returns that URL.
+     *
+     * @param mapPath The path to the map file.
+     * @return The URL used to designate the map in the map file.
+     * @throws IOException           Thrown if a file operation on the map file fails.
+     * @throws IllegalStateException Thrown if the map file cannot provide the desired information.
+     */
     public static String getMapUrl(String mapPath) throws IOException, IllegalStateException {
         String line = findLineContainingUrl(mapPath);
         return getMapUrlFromLine(line);
