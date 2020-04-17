@@ -22,8 +22,8 @@ public class MapUtils {
 
     private static String findLineContainingUrl(String mapPath) throws IOException, IllegalStateException {
         BufferedReader reader = new BufferedReader(new FileReader(mapPath));
-        String line = reader.readLine();
-        while (line != null) {
+        String line;
+        while ((line = reader.readLine()) != null) {
             if (line.startsWith("map")) {
                 return line;
             }
