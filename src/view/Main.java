@@ -54,8 +54,6 @@ public class Main {
             System.err.println("ERROR: Error occurred while generating FHIR files.");
             e.printStackTrace();
         }
-
-        // TODO: Hook up to transformator/validator
     }
 
     private static String getCsvInputPath(String[] args) {

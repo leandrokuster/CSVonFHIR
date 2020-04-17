@@ -1,5 +1,6 @@
 package fhirgenerator;
 
+import org.hl7.fhir.r5.model.FhirPublication;
 import org.hl7.fhir.r5.validation.ValidationEngine;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -30,10 +31,14 @@ public class FHIRGenerator {
         });
     }
 
+    // FIXME try out validator.transform()
     private static void generateSingleFhirFile(JSONObject jsonObject, String structureDefinitionPath, String mapPath, String outputFilePath) throws Exception {
         writeToFile(TEMP_FILE_PATH, jsonObject);
         ValidationEngine validator = initializeValidationEngine(TEMP_FILE_PATH, structureDefinitionPath, mapPath);
-        validator.convert(TEMP_FILE_PATH, outputFilePath);
+        System.out.println("Before convert");
+        validator.transform(TEMP_FILE_PATH, mapPath);
+        //validator.convert(TEMP_FILE_PATH, outputFilePath);
+        System.out.println("After convert");
         deleteFile(TEMP_FILE_PATH);
     }
 
@@ -49,6 +54,9 @@ public class FHIRGenerator {
     }
 
     /**
+     *
+     * Copy/Paste from run config:
+     *
      * ./res/parsedCSV/PatientData.json
      * -transform
      * http://hl7.org/fhir/StructureMap/CovidDataFinalMap
@@ -66,10 +74,10 @@ public class FHIRGenerator {
      * @throws IOException when loading an ig into the validator failed
      */
     private static ValidationEngine initializeValidationEngine(String dataJsonPath, String structureDefinitionOutputPath, String mapPath) throws Exception {
-        ValidationEngine validator;
-        validator = new ValidationEngine(dataJsonPath);
-        validator.loadIg(structureDefinitionOutputPath, false);
-        validator.loadIg(mapPath, false);
-        return validator;
+        ValidationEngine validationEngine = new ValidationEngine("hl7.fhir.r4.core", null, null, FhirPublication.R4);
+        validationEngine.setDebug(true);
+        validationEngine.loadIg(structureDefinitionOutputPath, false);
+        validationEngine.loadIg(mapPath, false);
+        return validationEngine;
     }
 }
