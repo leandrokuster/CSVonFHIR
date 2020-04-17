@@ -1,15 +1,14 @@
 package fhirgenerator;
 
+import org.hl7.fhir.r5.elementmodel.Element;
+import org.hl7.fhir.r5.formats.IParser;
 import org.hl7.fhir.r5.model.FhirPublication;
 import org.hl7.fhir.r5.validation.ValidationEngine;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class FHIRGenerator {
 
@@ -31,21 +30,25 @@ public class FHIRGenerator {
         });
     }
 
-    // FIXME try out validator.transform()
     private static void generateSingleFhirFile(JSONObject jsonObject, String structureDefinitionPath, String mapPath, String outputFilePath) throws Exception {
-        writeToFile(TEMP_FILE_PATH, jsonObject);
+        writeJsonToFile(TEMP_FILE_PATH, jsonObject);
         ValidationEngine validator = initializeValidationEngine(TEMP_FILE_PATH, structureDefinitionPath, mapPath);
-        System.out.println("Before convert");
-        validator.transform(TEMP_FILE_PATH, mapPath);
-        //validator.convert(TEMP_FILE_PATH, outputFilePath);
-        System.out.println("After convert");
+        // TODO: Implement dynamic reading of map name.
+        Element transformedElement = validator.transform(TEMP_FILE_PATH, "http://hl7.org/fhir/StructureMap/CovidDataFinalMap");
         deleteFile(TEMP_FILE_PATH);
+        writeElementToFile(outputFilePath, validator, transformedElement);
     }
 
-    private static void writeToFile(String path, JSONObject jsonObject) throws IOException {
+    private static void writeJsonToFile(String path, JSONObject jsonObject) throws IOException {
         FileWriter fileWriter = new FileWriter(path);
         fileWriter.write(jsonObject.toJSONString());
         fileWriter.close();
+    }
+
+    private static void writeElementToFile(String path, ValidationEngine validator, Element element) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(path);
+        new org.hl7.fhir.r5.elementmodel.JsonParser(validator.getContext()).compose(element, outputStream, IParser.OutputStyle.PRETTY, null);
+        outputStream.close();
     }
 
     private static boolean deleteFile(String path) {
@@ -54,9 +57,8 @@ public class FHIRGenerator {
     }
 
     /**
-     *
      * Copy/Paste from run config:
-     *
+     * <p>
      * ./res/parsedCSV/PatientData.json
      * -transform
      * http://hl7.org/fhir/StructureMap/CovidDataFinalMap
