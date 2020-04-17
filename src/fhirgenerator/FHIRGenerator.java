@@ -1,17 +1,16 @@
 package fhirgenerator;
 
 import org.hl7.fhir.r5.elementmodel.Element;
-import org.hl7.fhir.r5.formats.IParser;
 import org.hl7.fhir.r5.model.FhirPublication;
 import org.hl7.fhir.r5.validation.ValidationEngine;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.*;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class FHIRGenerator {
-
     private static int fileCounter = 0;
     private static final String TEMP_FILE_PATH = "./temp.json";
 
@@ -34,27 +33,10 @@ public class FHIRGenerator {
     }
 
     private static void generateSingleFhirFile(ValidationEngine validator, String mapUrl, JSONObject jsonObject, String outputFilePath) throws Exception {
-        writeJsonToFile(TEMP_FILE_PATH, jsonObject);
+        FileUtils.writeJsonToFile(TEMP_FILE_PATH, jsonObject);
         Element transformedElement = validator.transform(TEMP_FILE_PATH, mapUrl);
-        deleteFile(TEMP_FILE_PATH);
-        writeElementToFile(outputFilePath, transformedElement, validator);
-    }
-
-    private static void writeJsonToFile(String path, JSONObject jsonObject) throws IOException {
-        FileWriter fileWriter = new FileWriter(path);
-        fileWriter.write(jsonObject.toJSONString());
-        fileWriter.close();
-    }
-
-    private static void writeElementToFile(String path, Element element, ValidationEngine validator) throws IOException {
-        FileOutputStream outputStream = new FileOutputStream(path);
-        new org.hl7.fhir.r5.elementmodel.JsonParser(validator.getContext()).compose(element, outputStream, IParser.OutputStyle.PRETTY, null);
-        outputStream.close();
-    }
-
-    private static boolean deleteFile(String path) {
-        File file = new File(path);
-        return file.delete();
+        FileUtils.deleteFile(TEMP_FILE_PATH);
+        FileUtils.writeElementToFile(outputFilePath, transformedElement, validator);
     }
 
     private static String getMapUrl(String mapFilePath) {
