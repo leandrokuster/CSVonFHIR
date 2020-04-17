@@ -33,13 +33,13 @@ public class FHIRGenerator {
         writeToFile(TEMP_FILE_PATH, jsonObject);
         org.hl7.fhir.validation.ValidationEngine validator = initializeValidationEngine(TEMP_FILE_PATH, structureDefinitionPath, mapPath);
         validator.convert(TEMP_FILE_PATH, outputFilePath);
+        deleteFile(TEMP_FILE_PATH);
     }
 
     private static void writeToFile(String path, JSONObject jsonObject) throws IOException {
         FileWriter fileWriter = new FileWriter(path);
         fileWriter.write(jsonObject.toJSONString());
         fileWriter.close();
-        deleteFile(path);
     }
 
     private static boolean deleteFile(String path) {
