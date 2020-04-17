@@ -32,7 +32,7 @@ public class FHIRGenerator {
 
     private static void generateSingleFhirFile(JSONObject jsonObject, String structureDefinitionPath, String mapPath, String outputFilePath) throws Exception {
         writeJsonToFile(TEMP_FILE_PATH, jsonObject);
-        ValidationEngine validator = initializeValidationEngine(TEMP_FILE_PATH, structureDefinitionPath, mapPath);
+        ValidationEngine validator = initializeValidationEngine(structureDefinitionPath, mapPath);
         // TODO: Implement dynamic reading of map name.
         Element transformedElement = validator.transform(TEMP_FILE_PATH, "http://hl7.org/fhir/StructureMap/CovidDataFinalMap");
         deleteFile(TEMP_FILE_PATH);
@@ -75,7 +75,7 @@ public class FHIRGenerator {
      *
      * @throws IOException when loading an ig into the validator failed
      */
-    private static ValidationEngine initializeValidationEngine(String dataJsonPath, String structureDefinitionOutputPath, String mapPath) throws Exception {
+    private static ValidationEngine initializeValidationEngine(String structureDefinitionOutputPath, String mapPath) throws Exception {
         ValidationEngine validationEngine = new ValidationEngine("hl7.fhir.r4.core", null, null, FhirPublication.R4);
         validationEngine.setDebug(true);
         validationEngine.loadIg(structureDefinitionOutputPath, false);
