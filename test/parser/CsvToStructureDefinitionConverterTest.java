@@ -10,7 +10,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 
-public class CsvToStructureDefinitionParserTest {
+public class CsvToStructureDefinitionConverterTest {
 
     private static final String TEST_CSV_PATH = "res/inputCSV/Covid_Data_Final.csv";
     private static StructureDefinition structureDefinition = null;
@@ -25,7 +25,7 @@ public class CsvToStructureDefinitionParserTest {
             e.printStackTrace();
         }
         Assert.assertTrue(table.getHeaders().size() > 0);
-        structureDefinition = CsvToStructureDefinitionParser.generateStructureDefinitionFromCsv(table, type);
+        structureDefinition = CsvToStructureDefinitionConverter.generateStructureDefinitionFromCsv(table, type);
         System.out.println(structureDefinition);
     }
 

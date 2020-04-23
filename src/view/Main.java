@@ -8,7 +8,7 @@ import org.hl7.fhir.r4.model.StructureDefinition;
 import org.json.simple.JSONArray;
 import parser.CsvParser;
 import parser.CsvToJsonConverter;
-import parser.CsvToStructureDefinitionParser;
+import parser.CsvToStructureDefinitionConverter;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ public class Main {
         CsvTable inputTable = parseCsvFromFile(csvInputPath);
 
         System.out.println("Generating structure definition...");
-        StructureDefinition structureDefinition = CsvToStructureDefinitionParser.generateStructureDefinitionFromCsv(inputTable, type);
+        StructureDefinition structureDefinition = CsvToStructureDefinitionConverter.generateStructureDefinitionFromCsv(inputTable, type);
         writeStructureDefinition(structureDefinitionOutputPath, structureDefinition);
 
         System.out.println("Generating data file...");
@@ -128,7 +128,7 @@ public class Main {
 
     private static void writeStructureDefinition(String path, StructureDefinition definition) {
         try {
-            String structureDefinitionJson = CsvToStructureDefinitionParser.generateStructureDefinitionJson(definition);
+            String structureDefinitionJson = CsvToStructureDefinitionConverter.generateStructureDefinitionJson(definition);
             FileUtilities.writeStringToFile(path, structureDefinitionJson);
         } catch (IOException e) {
             System.err.println("ERROR: Generation of structure definition JSON file failed.");
