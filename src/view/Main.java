@@ -3,7 +3,7 @@ package view;
 import com.opencsv.exceptions.CsvValidationException;
 import csvmodel.CsvTable;
 import fhirgenerator.FHIRGenerator;
-import fhirgenerator.FileUtils;
+import utilities.FileUtils;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.json.simple.JSONArray;
 import parser.CsvParser;

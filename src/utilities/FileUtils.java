@@ -1,4 +1,4 @@
-package fhirgenerator;
+package utilities;
 
 import org.hl7.fhir.r5.elementmodel.Element;
 import org.hl7.fhir.r5.formats.IParser;

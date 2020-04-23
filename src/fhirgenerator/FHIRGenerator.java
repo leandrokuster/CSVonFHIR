@@ -6,6 +6,7 @@ import org.hl7.fhir.r5.validation.ValidationEngine;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import utilities.FileUtils;
 
 import java.io.FileReader;
 
