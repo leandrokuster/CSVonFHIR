@@ -18,7 +18,7 @@ public class FHIRGenerator {
         FileReader fileReader = new FileReader(dataJsonPath);
         JSONParser jsonParser = new JSONParser();
         JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
-        String mapUrl = MapUtils.getMapUrl(mapPath);
+        String mapUrl = MapHelper.getMapUrl(mapPath);
         ValidationEngine validator = initializeValidationEngine(structureDefinitionPath, mapPath);
 
         jsonArray.forEach(obj -> {
