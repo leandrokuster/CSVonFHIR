@@ -3,13 +3,13 @@ package view;
 import com.opencsv.exceptions.CsvValidationException;
 import csvmodel.CsvTable;
 import fhirgenerator.FHIRGenerator;
+import fhirgenerator.FileUtils;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.json.simple.JSONArray;
 import parser.CsvParser;
 import parser.CsvToJsonParser;
 import parser.CsvToStructureDefinitionParser;
 
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
@@ -126,7 +126,7 @@ public class Main {
     private static void writeStructureDefinition(String path, StructureDefinition definition) {
         try {
             String structureDefinitionJson = CsvToStructureDefinitionParser.generateStructureDefinitionJson(definition);
-            writeToFile(path, structureDefinitionJson);
+            FileUtils.writeStringToFile(path, structureDefinitionJson);
         } catch (IOException e) {
             System.err.println("ERROR: Generation of structure definition JSON file failed.");
             System.exit(-1);
@@ -135,17 +135,11 @@ public class Main {
 
     private static void writeDataJson(String path, JSONArray data) {
         try {
-            writeToFile(path, data.toJSONString());
+            FileUtils.writeStringToFile(path, data.toJSONString());
         } catch (IOException e) {
             System.err.println("ERROR: Generation of data JSON file failed.");
             System.exit(-1);
         }
-    }
-
-    private static void writeToFile(String path, String input) throws IOException {
-        FileWriter fileWriter = new FileWriter(path);
-        fileWriter.write(input);
-        fileWriter.close();
     }
 
     private static CsvTable parseCsvFromFile(String path) {
