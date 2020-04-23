@@ -10,7 +10,6 @@ import parser.CsvParser;
 import parser.CsvToJsonParser;
 import parser.CsvToStructureDefinitionParser;
 
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
