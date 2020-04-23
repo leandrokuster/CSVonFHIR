@@ -13,15 +13,18 @@ import parser.CsvToStructureDefinitionParser;
 import java.io.IOException;
 
 public class Main {
+    // Required path flags
     private static final String INPUT_PATH_FLAG = "-i";
     private static final String TYPE_FLAG = "-t";
-    private static final String STRUCTURE_DEFINITION_PATH_FLAG = "-s";
-    private static final String DATA_PATH_FLAG = "-d";
     private static final String MAP_PATH_FLAG = "-m";
+    // Optional path flags
+    private static final String DATA_PATH_FLAG = "-d";
+    private static final String STRUCTURE_DEFINITION_PATH_FLAG = "-s";
     private static final String FHIR_PATH_FLAG = "-o";
-
-    private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
+    
+    // Path default values
     private static final String DEFAULT_DATA_PATH = "./data.json";
+    private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
     private static final String DEFAULT_FHIR_PATH = "./fhir_output/";
 
     public static void main(String[] args) {
