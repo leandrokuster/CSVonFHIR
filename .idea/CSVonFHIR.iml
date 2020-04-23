@@ -11,8 +11,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="org.testifyproject.junit4:junit4-core:1.0.6" level="project" />
-    <orderEntry type="library" name="org.glassfish:javax.json:1.1.4" level="project" />
+    <orderEntry type="library" name="com.opencsv:opencsv:5.1" level="project" />
+    <orderEntry type="library" name="com.googlecode.json-simple:json-simple:1.1.1" level="project" />
     <orderEntry type="library" name="org.hl7.fhir.validation.cli" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven.plugins:maven-compiler-plugin:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.maven:maven-plugin-api:3.0" level="project" />
