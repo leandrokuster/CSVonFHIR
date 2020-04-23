@@ -7,7 +7,7 @@ import utilities.FileUtilities;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.json.simple.JSONArray;
 import parser.CsvParser;
-import parser.CsvToJsonParser;
+import parser.CsvToJsonConverter;
 import parser.CsvToStructureDefinitionParser;
 
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class Main {
         writeStructureDefinition(structureDefinitionOutputPath, structureDefinition);
 
         System.out.println("Generating data file...");
-        JSONArray inputTableJson = CsvToJsonParser.generateJSONFromCSV(inputTable, type);
+        JSONArray inputTableJson = CsvToJsonConverter.generateJSONFromCSV(inputTable, type);
         writeDataJson(dataJsonPath, inputTableJson);
 
         try {
