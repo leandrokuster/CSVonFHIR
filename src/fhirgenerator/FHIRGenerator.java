@@ -20,8 +20,6 @@ public class FHIRGenerator {
         String mapUrl = MapUtils.getMapUrl(mapPath);
         ValidationEngine validator = initializeValidationEngine(structureDefinitionPath, mapPath);
 
-        FileUtils.ensurePathExists(fhirOutputDirectory);
-
         jsonArray.forEach(obj -> {
             try {
                 String outputFilePath = fhirOutputDirectory + fileCounter + ".json"; // TODO: Implement creation of path, if it doesn't exist
