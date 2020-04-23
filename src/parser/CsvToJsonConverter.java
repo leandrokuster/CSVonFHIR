@@ -5,7 +5,7 @@ import csvmodel.CsvTable;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class CsvToJsonParser {
+public class CsvToJsonConverter {
     public static JSONObject generateJSONFromRow(CsvTable table, String resourceType, int rowIndex) {
         CsvRow targetRow = table.getRows().get(rowIndex);
         JSONObject rowObject = new JSONObject();

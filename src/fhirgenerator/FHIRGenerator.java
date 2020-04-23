@@ -6,6 +6,7 @@ import org.hl7.fhir.r5.validation.ValidationEngine;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import utilities.FileUtilities;
 
 import java.io.FileReader;
 
@@ -17,7 +18,7 @@ public class FHIRGenerator {
         FileReader fileReader = new FileReader(dataJsonPath);
         JSONParser jsonParser = new JSONParser();
         JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader);
-        String mapUrl = MapUtils.getMapUrl(mapPath);
+        String mapUrl = MapHelper.getMapUrl(mapPath);
         ValidationEngine validator = initializeValidationEngine(structureDefinitionPath, mapPath);
 
         jsonArray.forEach(obj -> {
@@ -32,10 +33,10 @@ public class FHIRGenerator {
     }
 
     private static void generateSingleFhirFile(ValidationEngine validator, String mapUrl, JSONObject jsonObject, String outputFilePath) throws Exception {
-        FileUtils.writeJsonToFile(TEMP_FILE_PATH, jsonObject);
+        FileUtilities.writeJsonToFile(TEMP_FILE_PATH, jsonObject);
         Element transformedElement = validator.transform(TEMP_FILE_PATH, mapUrl);
-        FileUtils.deleteFile(TEMP_FILE_PATH);
-        FileUtils.writeElementToFile(outputFilePath, transformedElement, validator);
+        FileUtilities.deleteFile(TEMP_FILE_PATH);
+        FileUtilities.writeElementToFile(outputFilePath, transformedElement, validator);
     }
 
     private static ValidationEngine initializeValidationEngine(String structureDefinitionOutputPath, String mapPath) throws Exception {

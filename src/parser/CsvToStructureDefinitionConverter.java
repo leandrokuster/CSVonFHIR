@@ -9,7 +9,7 @@ import org.hl7.fhir.r4.model.StructureDefinition;
 
 import java.io.IOException;
 
-public class CsvToStructureDefinitionParser {
+public class CsvToStructureDefinitionConverter {
     /**
      * Generates a FHIR StructureDefinition based on a parsed CSV file.
      *

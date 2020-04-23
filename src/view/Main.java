@@ -3,25 +3,28 @@ package view;
 import com.opencsv.exceptions.CsvValidationException;
 import csvmodel.CsvTable;
 import fhirgenerator.FHIRGenerator;
-import fhirgenerator.FileUtils;
+import utilities.FileUtilities;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.json.simple.JSONArray;
 import parser.CsvParser;
-import parser.CsvToJsonParser;
-import parser.CsvToStructureDefinitionParser;
+import parser.CsvToJsonConverter;
+import parser.CsvToStructureDefinitionConverter;
 
 import java.io.IOException;
 
 public class Main {
+    // Required path flags
     private static final String INPUT_PATH_FLAG = "-i";
     private static final String TYPE_FLAG = "-t";
-    private static final String STRUCTURE_DEFINITION_PATH_FLAG = "-s";
-    private static final String DATA_PATH_FLAG = "-d";
     private static final String MAP_PATH_FLAG = "-m";
+    // Optional path flags
+    private static final String DATA_PATH_FLAG = "-d";
+    private static final String STRUCTURE_DEFINITION_PATH_FLAG = "-s";
     private static final String FHIR_PATH_FLAG = "-o";
 
-    private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
+    // Path default values
     private static final String DEFAULT_DATA_PATH = "./data.json";
+    private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
     private static final String DEFAULT_FHIR_PATH = "./fhir_output/";
 
     public static void main(String[] args) {
@@ -40,11 +43,11 @@ public class Main {
         CsvTable inputTable = parseCsvFromFile(csvInputPath);
 
         System.out.println("Generating structure definition...");
-        StructureDefinition structureDefinition = CsvToStructureDefinitionParser.generateStructureDefinitionFromCsv(inputTable, type);
+        StructureDefinition structureDefinition = CsvToStructureDefinitionConverter.generateStructureDefinitionFromCsv(inputTable, type);
         writeStructureDefinition(structureDefinitionOutputPath, structureDefinition);
 
         System.out.println("Generating data file...");
-        JSONArray inputTableJson = CsvToJsonParser.generateJSONFromCSV(inputTable, type);
+        JSONArray inputTableJson = CsvToJsonConverter.generateJSONFromCSV(inputTable, type);
         writeDataJson(dataJsonPath, inputTableJson);
 
         try {
@@ -125,8 +128,8 @@ public class Main {
 
     private static void writeStructureDefinition(String path, StructureDefinition definition) {
         try {
-            String structureDefinitionJson = CsvToStructureDefinitionParser.generateStructureDefinitionJson(definition);
-            FileUtils.writeStringToFile(path, structureDefinitionJson);
+            String structureDefinitionJson = CsvToStructureDefinitionConverter.generateStructureDefinitionJson(definition);
+            FileUtilities.writeStringToFile(path, structureDefinitionJson);
         } catch (IOException e) {
             System.err.println("ERROR: Generation of structure definition JSON file failed.");
             System.exit(-1);
@@ -135,7 +138,7 @@ public class Main {
 
     private static void writeDataJson(String path, JSONArray data) {
         try {
-            FileUtils.writeStringToFile(path, data.toJSONString());
+            FileUtilities.writeStringToFile(path, data.toJSONString());
         } catch (IOException e) {
             System.err.println("ERROR: Generation of data JSON file failed.");
             System.exit(-1);

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MapUtils {
+public class MapHelper {
     /**
      * Scans a map file at a given path for the contained URL which designates the map and returns that URL.
      *

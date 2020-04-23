@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CsvToJsonParserTest {
+public class CsvToJsonConverterTest {
 
     private static final String TEST_CSV_PATH = "res/inputCSV/Covid_Data_Final.csv";
 
@@ -24,7 +24,7 @@ public class CsvToJsonParserTest {
         }
 
         Assert.assertTrue(table.getHeaders().size() > 0);
-        JSONObject jsonObject = CsvToJsonParser.generateJSONFromRow(table, "CovidDataFinal", 0);
+        JSONObject jsonObject = CsvToJsonConverter.generateJSONFromRow(table, "CovidDataFinal", 0);
 
         System.out.println(jsonObject.toString());
 
