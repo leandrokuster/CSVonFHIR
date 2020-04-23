@@ -16,7 +16,14 @@ We try to tackle part of what causes this problem by creating an easy way to con
 into the FHIR format. 
 This will offer an easy way to make data accessible and sharable between various groups without much effort. 
 
-## Setup & User Manual
+## Setup 
+1. Clone the project from github
+2. Download the following the [FHIR Validator jar](https://github.com/ahdis/cda-core-2.0/releases/download/v0.0.2-dev/org.hl7.fhir.validation.cli.jar) 
+3. Add the jar as a library to your project as described [in this guide by jetbrains](https://www.jetbrains.com/help/idea/library.html#define-a-project-library). 
+<br>This is required, since this program is currently using a patched version of the 
+FHIR Validator, which is not available as a Maven dependency. 
+
+##User Manual
 CSVonFHIR is executed over the command line like a standard Java application via the command `java -jar CSVonFHIR.jar`.
 The application uses command line parameters to accept input:
   - Required arguments:
