@@ -2,6 +2,8 @@ map "http://hl7.org/fhir/StructureMap/CovidDataFinalMap" = "CovidDataFinalMap"
 uses "http://www.csvonfhir.com/codevscovid19/StructureDefinition/CovidDataFinal" alias CovidDataFinal as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as target
 group csv(source src : CovidDataFinal, target tgt : Patient) {
+    src.id as id -> tgt.id = id "id";
+    src.age as age -> tgt.birthDate = (2020-age.toInteger()) "age";
     src.gender as gender where $this = 'F'  -> tgt.gender = 'female' "rule_a";
     src.gender as gender where $this = 'M'  -> tgt.gender = 'male' "rule_b";
 }
