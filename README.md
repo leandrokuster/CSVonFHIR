@@ -23,6 +23,32 @@ This will offer an easy way to make data accessible and sharable between various
 <br>This is required, since this program is currently using a patched version of the 
 FHIR Validator, which is not available as a Maven dependency. 
 
+### Run Configuration
+#### IntelliJ Setup
+In case you are using IntelliJ, the default run configuration is included in your project and should be available as "Main.java".
+
+#### Other Development Environments
+If you are using a different development environment than IntelliJ you have to create a run configuration. For this you 
+can use the following default configuration which uses the included example files:
+* Input CSV: Covid_Data_Final.csv
+* FHIR Map: CovidDataFinalMap.map
+
+Following are the parameter values you need to set: 
+```
+ -i
+ ./res/inputCSV/Covid_Data_Final.csv
+ -t
+ CovidDataFinal
+ -m
+ ./res/maps/CovidDataFinalMap.map
+ -d
+ ./res/parsedCSV/PatientDataList.json
+ -s
+ ./res/structuredefinition/CovidDataFinalStructureDef.json
+ -o
+ ./res/FHIR/
+```
+
 ##User Manual
 CSVonFHIR is executed over the command line like a standard Java application via the command `java -jar CSVonFHIR.jar`.
 The application uses command line parameters to accept input:
