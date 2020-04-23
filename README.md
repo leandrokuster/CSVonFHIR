@@ -29,3 +29,4 @@ The application uses command line parameters to accept input:
     - `-o [path]`: The path where the generated FHIR files are saved to. The default value is `./fhir_output/`.
 
 
+

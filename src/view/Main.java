@@ -24,7 +24,6 @@ public class Main {
     private static final String DEFAULT_DATA_PATH = "./data.json";
     private static final String DEFAULT_FHIR_PATH = "./fhir_output/";
 
-
     public static void main(String[] args) {
         if (args.length == 0) {
             printHelpMessage();
@@ -114,7 +113,6 @@ public class Main {
             return DEFAULT_FHIR_PATH;
         }
     }
-
 
     private static String getParameter(String parameterFlag, String[] args) {
         for (int i = 0; i < args.length; i++) {
