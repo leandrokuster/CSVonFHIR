@@ -21,7 +21,7 @@ public class Main {
     private static final String DATA_PATH_FLAG = "-d";
     private static final String STRUCTURE_DEFINITION_PATH_FLAG = "-s";
     private static final String FHIR_PATH_FLAG = "-o";
-    
+
     // Path default values
     private static final String DEFAULT_DATA_PATH = "./data.json";
     private static final String DEFAULT_STRUCTURE_DEFINITION_PATH = "./structure-definition.json";
