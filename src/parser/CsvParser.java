@@ -11,8 +11,7 @@ import java.io.Reader;
 import java.util.Arrays;
 
 public class CsvParser {
-    private static final char[] ILLEGAL_CHARACTERS = {' ', '_'};
-    private static final char[] REPLACEMENT_CHARACTERS = {'-', '-'};
+    private static final char[] ILLEGAL_CHARACTERS = {' ', '-', '_'};
 
     /**
      * Reads a CSV file and parses it into a CsvTable object.
@@ -55,8 +54,8 @@ public class CsvParser {
     private static String[] removeIllegalCharactersFromHeaders(String[] headers) {
         String[] legalHeaders = new String[headers.length];
         for (int i = 0; i < headers.length; i++) {
-            for (int j = 0; j < ILLEGAL_CHARACTERS.length; j++) {
-                legalHeaders[i] = headers[i].replace(ILLEGAL_CHARACTERS[j], REPLACEMENT_CHARACTERS[j]);
+            for (char illegalCharacter : ILLEGAL_CHARACTERS) {
+                legalHeaders[i] = headers[i].replace(String.valueOf(illegalCharacter), "");
             }
         }
         return legalHeaders;
