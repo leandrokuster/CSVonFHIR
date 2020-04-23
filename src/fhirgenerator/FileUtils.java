@@ -11,6 +11,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileUtils {
+    public static void ensurePathExists(String folderPath) throws IOException {
+        File path = new File(folderPath);
+        if (!path.exists()) {
+            if (path.mkdirs()) {
+                return;
+            } else {
+                throw new IOException("Folder structure could not be established.");
+            }
+        }
+    }
+
     public static void writeJsonToFile(String path, JSONObject jsonObject) throws IOException {
         FileWriter fileWriter = new FileWriter(path);
         fileWriter.write(jsonObject.toJSONString());
