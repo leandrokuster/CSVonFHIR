@@ -18,8 +18,9 @@ This will offer an easy way to make data accessible and sharable between various
 
 ## Setup 
 1. Clone the project from github
-2. Download the following the [FHIR Validator jar](https://github.com/ahdis/cda-core-2.0/releases/download/v0.0.2-dev/org.hl7.fhir.validation.cli.jar) 
-3. Add the jar as a library to your project as described [in this guide by jetbrains](https://www.jetbrains.com/help/idea/library.html#define-a-project-library). 
+2. Use Maven to import the basic dependencies of the project
+3. Download the following the [FHIR Validator jar](https://github.com/ahdis/cda-core-2.0/releases/download/v0.0.2-dev/org.hl7.fhir.validation.cli.jar) 
+4. Add the jar as a library to your project as described [in this guide by jetbrains](https://www.jetbrains.com/help/idea/library.html#define-a-project-library). 
 <br>This is required, since this program is currently using a patched version of the 
 FHIR Validator, which is not available as a Maven dependency. 
 
@@ -48,8 +49,9 @@ Following are the parameter values you need to set:
  -o
  ./res/FHIR/
 ```
+More information about this configuration and how to adjust it can be found in the section [User Manual](#UserManual).
 
-##User Manual
+## <a name="UserManual"></a>User Manual
 CSVonFHIR is executed over the command line like a standard Java application via the command `java -jar CSVonFHIR.jar`.
 The application uses command line parameters to accept input:
   - Required arguments:
