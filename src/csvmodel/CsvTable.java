@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CsvTable {
-    private List<String> headers;
-    private List<CsvRow> rows;
+    private final List<String> headers;
+    private final List<CsvRow> rows;
 
     /**
      * Generates an empty CsvTable prepared with a header for each column and ready to accept rows.

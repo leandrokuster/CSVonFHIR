@@ -10,10 +10,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.opencsv:opencsv:5.1" level="project" />
-    <orderEntry type="library" name="ca.uhn.hapi.fhir:org.hl7.fhir.r4:4.2.0" level="project" />
-    <orderEntry type="library" name="ca.uhn.hapi.fhir:org.hl7.fhir.validation:4.2.0" level="project" />
     <orderEntry type="library" name="org.testifyproject.junit4:junit4-core:1.0.6" level="project" />
     <orderEntry type="library" name="org.glassfish:javax.json:1.1.4" level="project" />
     <orderEntry type="library" name="com.googlecode.json-simple:json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="org.hl7.fhir.validation.cli" level="project" />
   </component>
 </module>

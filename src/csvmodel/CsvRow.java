@@ -3,8 +3,8 @@ package csvmodel;
 import java.util.Hashtable;
 
 public class CsvRow {
-    private CsvTable table;
-    private Hashtable<String, String> rowMap;
+    private final CsvTable table;
+    private final Hashtable<String, String> rowMap;
 
     /**
      * Generates a new row to include in a CsvTable.
