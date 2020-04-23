@@ -6,4 +6,16 @@ group csv(source src : CovidDataFinal, target tgt : Patient) {
     src.age as age -> tgt.birthDate = (2020-age.toInteger()) "age";
     src.gender as gender where $this = 'F'  -> tgt.gender = 'female' "rule_a";
     src.gender as gender where $this = 'M'  -> tgt.gender = 'male' "rule_b";
+    src.nationality as nationality -> tgt.extension as ext, 
+       ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-citizenship',
+       ext.extension as extcode, 
+       extcode.url='code',
+       extcode.value = create('CodeableConcept') as value,
+       value.text = nationality "nationality";
+    src -> tgt.address as address then {
+        src.canton as canton -> address.state = canton "state";
+        src.country as country -> address.country = country "country";
+        src.locationzip as locationzip -> address.postalCode = locationzip "postalCode";
+    } "address";
 }
+
