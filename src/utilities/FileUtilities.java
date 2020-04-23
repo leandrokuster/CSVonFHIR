@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileUtils {
+public class FileUtilities {
     /**
      * Writes a string to a file at a certain path. Checks beforehand if the path exists and creates it if it doesn't.
      *
