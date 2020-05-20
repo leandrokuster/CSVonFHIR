@@ -36,8 +36,8 @@ The following are the runtime parameter values you need to set in order to use t
 -i ./example_input/inputCSV/Covid_Data_Final.csv
 -t CovidDataFinal
 -m ./example_input/maps/CovidDataFinalMap.map
--s ./example_output/structure-definition.json
 -d ./example_output/data.json
+-s ./example_output/structure-definition.json
 -o ./example_output/fhir/
 ```
 To use your own files, adjust the paths accordingly.
@@ -55,5 +55,8 @@ The application uses command line parameters to accept input:
     - `-s [path]`: The path where the FHIR structure definition file is saved. The default value is `./structure-definition.json`.
     - `-o [path]`: The path where the generated FHIR files are saved to. The default value is `./fhir_output/`.
 
+As a complete example, to achieve the same effect as the runtime setup mentioned above, you would need to run the following command in the command line:
+
+`java -jar CSVonFHIR.jar -i ./example_input/inputCSV/Covid_Data_Final.csv -t CovidDataFinal -m ./example_input/maps/CovidDataFinalMap.map -d ./example_output/data.json -s ./example_output/structure-definition.json -o ./example_output/fhir/`.
 
 
