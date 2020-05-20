@@ -103,6 +103,7 @@ modules.xml
 
 # Package Files #
 *.jar
+!CSVonFHIR.jar
 *.war
 *.nar
 *.ear
