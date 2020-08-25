@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ValidationMapping [Fixed Jar]" type="JarApplication">
-    <option name="JAR_PATH" value="$PROJECT_DIR$/org.hl7.fhir.validation.cli.jar" />
-    <option name="PROGRAM_PARAMETERS" value="./res/parsedCSV/PatientData.json -transform http://hl7.org/fhir/StructureMap/CovidDataFinalMap -version 4.0.1 -ig ./res/structuredefinition/CovidDataFinalStructureDef.json -ig ./res/maps/CovidDataFinalMap.map -log test.txt -output ./output.json" />
-    <option name="WORKING_DIRECTORY" value="E:\Workspaces\CSVonFHIR" />
-    <option name="ALTERNATIVE_JRE_PATH" />
-    <method v="2" />
-  </configuration>
-</component>

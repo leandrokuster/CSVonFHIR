@@ -3,8 +3,8 @@ Project developed during the #codevscovid19 hackathon in 2020.
 
 ## Introduction
 ### Goal
-The goal of this project is to create a dynamic parser which generates FHIR document based on a CSV input and then populates
-this FHIR document with the CSV data.
+The goal of this project is to create a dynamic parser which generates FHIR document based on an arbitrary CSV input and then populates
+a FHIR-compliant document with the CSV data.
 
 ### Purpose of this project
 [FHIR](https://www.hl7.org/fhir/index.html) is a standard which describes data formats and resources as well as an API for
@@ -20,39 +20,31 @@ This will offer an easy way to make data accessible and sharable between various
 1. Clone the project from github
 2. Use Maven to import the basic dependencies of the project
 3. Download the following the [FHIR Validator jar](https://github.com/ahdis/cda-core-2.0/releases/download/v0.0.2-dev/org.hl7.fhir.validation.cli.jar) 
-4. Add the jar as a library to your project as described [in this guide by jetbrains](https://www.jetbrains.com/help/idea/library.html#define-a-project-library). 
-<br>This is required, since this program is currently using a patched version of the 
-FHIR Validator, which is not available as a Maven dependency. 
+4. Add the jar as a library to your project. If you are using IntelliJ, [use this guide by jetbrains](https://www.jetbrains.com/help/idea/library.html#define-a-project-library). 
+<br>
+This step is required, since this program is currently using a patched version of the FHIR Validator, which is not yet available as a Maven dependency. 
 
 ### Run Configuration
-#### IntelliJ Setup
-In case you are using IntelliJ, the default run configuration is included in your project and should be available as "Main.java".
-
-#### Other Development Environments
-If you are using a different development environment than IntelliJ you have to create a run configuration. For this you 
-can use the following default configuration which uses the included example files:
+This application was developed using IntelliJ IDEA Community Edition. However, a setup should be possible in all Java IDEs.
+This repository ships with two sample input files found in the example_input folder. These are enough to demonstrate the basic capabilities of the CSVonFHIR tool.
+The two files represent an input CSV file in a proprietary format as well as a FHIR mapping file, which is used to transform the input CSV to the FHIR format.
 * Input CSV: Covid_Data_Final.csv
 * FHIR Map: CovidDataFinalMap.map
 
-Following are the parameter values you need to set: 
+The following are the runtime parameter values you need to set in order to use the example input files and generate output in an example output folder: 
 ```
- -i
- ./res/inputCSV/Covid_Data_Final.csv
- -t
- CovidDataFinal
- -m
- ./res/maps/CovidDataFinalMap.map
- -d
- ./res/parsedCSV/PatientDataList.json
- -s
- ./res/structuredefinition/CovidDataFinalStructureDef.json
- -o
- ./res/FHIR/
+-i ./example_input/inputCSV/Covid_Data_Final.csv
+-t CovidDataFinal
+-m ./example_input/maps/CovidDataFinalMap.map
+-d ./example_output/data.json
+-s ./example_output/structure-definition.json
+-o ./example_output/fhir/
 ```
+To use your own files, adjust the paths accordingly.
 More information about this configuration and how to adjust it can be found in the section [User Manual](#UserManual).
 
 ## <a name="UserManual"></a>User Manual
-CSVonFHIR is executed over the command line like a standard Java application via the command `java -jar CSVonFHIR.jar`.
+CSVonFHIR can be executed over the command line like a standard Java application after compiling it via the command `java -jar CSVonFHIR.jar`.
 The application uses command line parameters to accept input:
   - Required arguments:
     - `-i [path]`: The path to the input CSV file. This file is then parsed into JSON and fed through the FHIR transformator.
@@ -63,5 +55,8 @@ The application uses command line parameters to accept input:
     - `-s [path]`: The path where the FHIR structure definition file is saved. The default value is `./structure-definition.json`.
     - `-o [path]`: The path where the generated FHIR files are saved to. The default value is `./fhir_output/`.
 
+As a complete example, to achieve the same effect as the runtime setup mentioned above, you would need to run the following command in the command line:
+
+`java -jar CSVonFHIR.jar -i ./example_input/inputCSV/Covid_Data_Final.csv -t CovidDataFinal -m ./example_input/maps/CovidDataFinalMap.map -d ./example_output/data.json -s ./example_output/structure-definition.json -o ./example_output/fhir/`.
 
 
